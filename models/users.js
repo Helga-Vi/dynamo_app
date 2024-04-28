@@ -1,6 +1,7 @@
 // models/users.js
 
 const docClient = require('../AWSconfig.js');
+const { ScanCommand } = require("@aws-sdk/lib-dynamodb");
 //console.log(docClient);
 
 const users = {
@@ -11,7 +12,7 @@ const users = {
   };
 
   try {
-      const data = await docClient.scan(params).promise();
+      const data = await docClient.send(new ScanCommand(params));
       return data.Items;
   } catch (error) {
       console.error('Error listing users:', error);
