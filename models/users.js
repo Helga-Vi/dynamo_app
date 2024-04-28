@@ -1,6 +1,7 @@
 // models/users.js
 
 const docClient = require('../AWSconfig.js');
+//console.log(docClient);
 
 const users = {
  list: async () => {
