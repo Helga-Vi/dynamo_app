@@ -15,7 +15,6 @@ const client = new DynamoDBClient({
     }
 });
 
-//const s3=new AWS.S3();
 const docClient = DynamoDBDocumentClient.from(client);
 
 module.exports= {docClient};
