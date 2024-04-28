@@ -1,8 +1,10 @@
 // models/users.js
 
-const docClient = require('../AWSconfig.js');
+const { docClient } = require('../AWSconfig.js');
 const { ScanCommand } = require("@aws-sdk/lib-dynamodb");
+const { PutCommand } = require("@aws-sdk/lib-dynamodb");
 //console.log(docClient);
+//console.log(ScanCommand);
 
 const users = {
  list: async () => {
@@ -45,9 +47,8 @@ const users = {
           ...value
       }
   };
-
   try {
-      await docClient.put(params).promise();
+      await docClient.send(new PutCommand(params));
       return { success: true };
   } catch (error) {
       console.error('Error setting user:', error);
