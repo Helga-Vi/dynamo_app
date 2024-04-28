@@ -3,7 +3,7 @@ var router = express.Router();
 var users = require('../models/users');
 
 //const {s3} = require('../AWSconfig.js');
-//const {docClient} = require('../AWSconfig.js');
+const {docClient} = require('../AWSconfig.js');
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
