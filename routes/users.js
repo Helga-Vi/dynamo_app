@@ -31,12 +31,12 @@ router.get('/:key', async function(req, res, next) {
 router.post('/', async function(req, res, next) {
   try {
   const {email, firstName, lastName, age} = req.body;
-  await users.set(email, {
+  const newUser = await users.set(email, {
     firstName: firstName,
     secondName: lastName,
     age: age
   });
-  res.status(201).end();
+  res.status(201).json(newUser);
  } catch (error) {
     res.status(500).send({ error: 'Failed to create user' });
  }
@@ -45,12 +45,12 @@ router.post('/', async function(req, res, next) {
 router.put('/', async function(req, res, next) {
   try {
   const {email, firstName, lastName, age} = req.body;
-  await users.set(email, {
+  const changedUser = await users.set(email, {
     firstName: firstName,
     secondName: lastName,
     age: age
   });
-  res.end();
+  res.json(changedUser);
 } catch (error) {
   res.status(500).send({ error: 'Failed to update user' });
 }
