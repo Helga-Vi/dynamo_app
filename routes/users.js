@@ -58,7 +58,8 @@ router.put('/', async function(req, res, next) {
 
 router.delete('/:key', async function(req, res, next) {
 try {
-  const [email, age] = req.params.key.split('|');
+  const [email, ageString] = req.params.key.split('|');
+  const age = ageString !== undefined ? Number(ageString) : undefined;
   await users.delete(email,age);
   res.end();
 } catch (error) {
