@@ -3,6 +3,9 @@
 const { docClient } = require('../AWSconfig.js');
 const { ScanCommand } = require("@aws-sdk/lib-dynamodb");
 const { PutCommand } = require("@aws-sdk/lib-dynamodb");
+const { GetCommand } = require("@aws-sdk/lib-dynamodb");
+const { DeleteCommand } = require("@aws-sdk/lib-dynamodb");
+
 //console.log(docClient);
 //console.log(ScanCommand);
 
@@ -31,7 +34,7 @@ const users = {
   };
 
   try {
-      const data = await docClient.get(params).promise();
+      const data = await docClient.send(new GetCommand(params));
       return data.Item;
   } catch (error) {
       console.error('Error getting user:', error);
@@ -55,17 +58,22 @@ const users = {
       throw error; // Rethrow the error to be handled by the calling function
   }
 },
- delete: async (key) => {
-    console.log(`Deleting user with key: ${key}`);
-    const params = {
-      TableName: 'Users', // Replace 'Users' with your actual table name
-      Key: {
-          'email': key // Assuming 'email' is the primary key
-      }
-  };
+ delete: async (email,age) => {
+    console.log(`Deleting user with email: ${email}`);
+    let params = {
+        TableName: 'users',
+        Key: {
+            'email': email
+        }
+    };
+
+    // If age is provided, add it to the key
+    if (age !== undefined) {
+        params.Key['age'] = age;
+    }
 
   try {
-      await docClient.delete(params).promise();
+      await docClient.send(new DeleteCommand(params));
       return { success: true };
   } catch (error) {
       console.error('Error deleting user:', error);

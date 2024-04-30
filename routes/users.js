@@ -58,7 +58,8 @@ router.put('/', async function(req, res, next) {
 
 router.delete('/:key', async function(req, res, next) {
 try {
-  await users.delete(req.params.key);
+  const [email, age] = req.params.key.split('|');
+  await users.delete(email,age);
   res.end();
 } catch (error) {
   res.status(500).send({ error: 'Failed to delete user' });
