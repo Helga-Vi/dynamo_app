@@ -56,10 +56,10 @@ router.put('/', async function(req, res, next) {
 }
 });
 
-router.delete('/:key', async function(req, res, next) {
+router.delete('/', async function(req, res, next) {
 try {
-  const [email, ageString] = req.params.key.split('|');
-  const age = ageString !== undefined ? Number(ageString) : undefined;
+  const email = req.query.email;
+  const age = req.query.age ? Number(req.query.age) : undefined; // Convert age to a number if provided
   await users.delete(email,age);
   res.end();
 } catch (error) {

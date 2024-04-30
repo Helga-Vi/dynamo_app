@@ -59,7 +59,7 @@ const users = {
   }
 },
  delete: async (email,age) => {
-    console.log(`Deleting user with email: ${email}`);
+    console.log(`Deleting user with email: ${email} and age: ${age}`);
     let params = {
         TableName: 'users',
         Key: {
